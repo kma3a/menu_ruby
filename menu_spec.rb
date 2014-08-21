@@ -14,4 +14,11 @@ describe Meal do
       expect{Meal.new}.to raise_error(ArgumentError)
     end
   end
+
+  context '#entree' do
+
+    it 'returns the entree' do
+      expect(mean.entree).to be('sushi')
+    end
+  end
 end
