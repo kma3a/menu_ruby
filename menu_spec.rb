@@ -69,4 +69,10 @@ describe Controller do
     end
   end
 
+  context '#night' do
+    it 'should be an instance of meal' do
+      expect(con.night).to be_an_instance_of(Meal)
+    end
+  end
+
 end
