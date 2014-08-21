@@ -46,3 +46,21 @@ describe Meal do
   end
 end
 
+describe Controller do 
+  
+  let(:night) {Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake'})}
+  let(:morning) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})}
+  
+  let(:con) {Controller.new({morning: morning, night: night, input: 'morning, 1'})}
+
+  context '#initialize' do
+    it ' creates a controller object' do
+      expect(con).to be_an_instance_of(Controller)
+    end
+
+    it 'returns an error if no arguemts' do
+      expect{Controller.new}.to raise_error(ArgumentError)
+    end
+  end
+
+end
