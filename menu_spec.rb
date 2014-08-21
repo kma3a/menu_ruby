@@ -21,4 +21,10 @@ describe Meal do
       expect(meal.entree).to eq('sushi')
     end
   end
+
+  context '#side' do
+    it 'returns the side' do
+      expect(meal.side).to eq('rice')
+    end
+  end
 end
