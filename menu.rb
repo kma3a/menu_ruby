@@ -10,3 +10,7 @@ class Meal
   end
 
 end
+
+
+morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})
+night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake'})

@@ -3,6 +3,7 @@ require_relative "menu"
 describe Meal do
 
   let(:meal) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', dessert: 'melon pan'})}
+  let(:meal2) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake'})}
 
   context '#initialize' do
 
@@ -38,5 +39,10 @@ describe Meal do
     it 'returns the dessert' do
       expect(meal.dessert).to eq('melon pan')
     end
+
+    it 'returns nil if there is no dessert' do
+      expect(meal2.dessert).to eq(nil)
+    end
   end
 end
+
