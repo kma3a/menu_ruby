@@ -63,7 +63,7 @@ describe Controller do
     end
   end
 
-  context '#moring' do
+  context '#morning' do
     it 'should be an instance of meal' do
       expect(con.morning).to be_an_instance_of(Meal)
     end
@@ -77,7 +77,11 @@ describe Controller do
 
   context '#input' do
     it 'should be a string' do
-      expect(con.input.is_a?(String)).to eq(true)
+      expect(con.input.is_a?(Array)).to eq(true)
+    end
+
+    it 'returns as an array' do
+      expect(con.input).to eq(["morning", "1"])
     end
   end
 

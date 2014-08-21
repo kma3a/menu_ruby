@@ -22,7 +22,7 @@ class Controller
   def initialize(args)
     @morning = args[:morning]
     @night = args[:night]
-    @input = args[:input]
+    @input = args[:input].split(", ")
 
   end
 
