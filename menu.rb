@@ -17,7 +17,7 @@ night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake
 
 class Controller
 
-  attr_reader :morning, :night
+  attr_reader :morning, :night, :input
 
   def initialize(args)
     @morning = args[:morning]

@@ -75,4 +75,10 @@ describe Controller do
     end
   end
 
+  context '#input' do
+    it 'should be a string' do
+      expect(con.input.is_a?(String)).to eq(true)
+    end
+  end
+
 end
