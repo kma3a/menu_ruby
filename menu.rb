@@ -15,14 +15,13 @@ end
 morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})
 night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake'})
 
-class Controller
+class MealController
 
-  attr_reader :morning, :night, :input
+  attr_reader :meal, :input
 
   def initialize(args)
-    @morning = args[:morning]
-    @night = args[:night]
-    @input = args[:input].split(", ")
+    @meal = args[:meal]
+    @input = args[:input]
 
   end
 

@@ -46,32 +46,25 @@ describe Meal do
   end
 end
 
-describe Controller do 
+describe MealController do 
   
-  let(:night) {Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake'})}
-  let(:morning) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})}
+  let(:meal) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})}
   
-  let(:con) {Controller.new({morning: morning, night: night, input: 'morning, 1'})}
+  let(:con) {MealController.new({meal: meal, input: [1,2,3]})}
 
   context '#initialize' do
     it ' creates a controller object' do
-      expect(con).to be_an_instance_of(Controller)
+      expect(con).to be_an_instance_of(MealController)
     end
 
     it 'returns an error if no arguemts' do
-      expect{Controller.new}.to raise_error(ArgumentError)
+      expect{MealController.new}.to raise_error(ArgumentError)
     end
   end
 
-  context '#morning' do
+  context '#meal' do
     it 'should be an instance of meal' do
-      expect(con.morning).to be_an_instance_of(Meal)
-    end
-  end
-
-  context '#night' do
-    it 'should be an instance of meal' do
-      expect(con.night).to be_an_instance_of(Meal)
+      expect(con.meal).to be_an_instance_of(Meal)
     end
   end
 
@@ -81,7 +74,7 @@ describe Controller do
     end
 
     it 'returns as an array' do
-      expect(con.input).to eq(["morning", "1"])
+      expect(con.input).to eq([1,2,3])
     end
   end
 
