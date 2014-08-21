@@ -78,4 +78,16 @@ describe MealController do
     end
   end
 
+  context '#order' do
+    it 'should be an empty string' do
+      expect(con.order).to eq("")
+    end
+  end
+  
+  context '#parse_order' do
+    it 'returns the order' do
+      expect(con.parse_order).to eq("eggs, toast, coffee")
+    end
+  end
+
 end
