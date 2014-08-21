@@ -27,4 +27,16 @@ describe Meal do
       expect(meal.side).to eq('rice')
     end
   end
+
+  context '#drink' do
+    it 'returns the drink' do
+      expect(meal.drink).to eq('sake')
+    end
+  end
+
+  context '#dessert' do
+    it 'returns the dessert' do
+      expect(meal.dessert).to eq('melon pan')
+    end
+  end
 end
