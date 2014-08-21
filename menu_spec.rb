@@ -18,7 +18,7 @@ describe Meal do
   context '#entree' do
 
     it 'returns the entree' do
-      expect(mean.entree).to be('sushi')
+      expect(meal.entree).to eq('sushi')
     end
   end
 end
