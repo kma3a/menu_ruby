@@ -52,6 +52,7 @@ describe MealController do
   
   let(:con) {MealController.new({meal: meal, input: [1,2,3]})}
   let(:con2) {MealController.new({meal: meal, input: [1,2,3,5]})}
+  let(:con3) {MealController.new({meal: meal, input: [1,2,4,5]})}
 
   context '#initialize' do
     it ' creates a controller object' do
@@ -88,6 +89,10 @@ describe MealController do
   context '#parse_order' do
     it 'returns the order' do
       expect(con.parse_order).to eq("eggs, toast, coffee")
+    end
+
+    it 'stops at an error' do 
+      expect(con3.parse_order).to eq("eggs, toast, error")
     end
 
     it 'returns error if invalid selection' do

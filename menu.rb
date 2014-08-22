@@ -28,6 +28,9 @@ class MealController
   
   def parse_order
     input.each do |num|
+      if order.last == "error"
+        break
+      end
      order << get_food(num) 
     end
     order.join(", ")
