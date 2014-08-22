@@ -133,12 +133,6 @@ describe MealController do
     end
   end
 
-  context '#meal' do
-    it 'should be nil when created' do
-      expect(con.meal).to eq(nil)
-    end
-  end
-
   context '#morning' do
     it 'should be an instance of meal' do
       expect(con.morning).to be_an_instance_of(Meal)

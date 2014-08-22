@@ -76,7 +76,6 @@ class MealController
   def initialize(args)
     @night = args[:night]
     @morning = args[:morning]
-    @meal = nil
     @input = args[:input]
     @output = []
   end
