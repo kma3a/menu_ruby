@@ -162,8 +162,8 @@ describe MealViews do
       expect(MealViews::StartView.render(user_input)).to eq('morning, 1, 2, 3')
     end
 
-  # context '#regular_view' do
-  #   expect(view.regular_view(["eggs", "toast", "error"])).to eq("eggs, toast, error")
-  # end
+  it 'displays a list of what you ordered' do
+    expect(MealViews::RegularView.render(["eggs", "toast", "error"])).to eq("eggs, toast, error")
+  end
 
 end

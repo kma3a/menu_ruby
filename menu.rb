@@ -92,5 +92,10 @@ module MealViews
     end
   end
 
+  class RegularView
+    def self.render(output)
+      output.join(", ")
+    end
+  end
 
 end
