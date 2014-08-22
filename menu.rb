@@ -34,6 +34,12 @@ class Meal
   def can_repeat(item)
     item == repeat
   end
+
+  def check_repeat(item, count)
+    if can_repeat(item) && count > 1
+      return "#{item}(x#{count})"
+    end
+  end
  
 
 end

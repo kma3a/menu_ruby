@@ -77,6 +77,12 @@ describe Meal do
     end
   end
 
+  context '#check_repeat' do
+    it 'returns item with count if it can repeat' do
+      expect(meal.check_repeat('rice', 2)).to eq("rice(x2)")
+    end
+  end
+
 end
 
 describe MealController do 
