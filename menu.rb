@@ -23,7 +23,7 @@ class MealController
   def initialize(args)
     @meal = args[:meal]
     @input = args[:input]
-    @order = ""
+    @order = []
   end
   
   def parse_order
@@ -40,11 +40,8 @@ class MealController
         else
         order << "error"
       end
-      unless index == (input.length-1)
-        order << ", "
-      end
     end
-    order
+    order.join(", ")
   end
 end
 

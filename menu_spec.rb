@@ -80,8 +80,8 @@ describe MealController do
   end
 
   context '#order' do
-    it 'should be an empty string' do
-      expect(con.order).to eq("")
+    it 'should be an empty array' do
+      expect(con.order).to eq([])
     end
   end
   
