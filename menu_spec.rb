@@ -170,7 +170,7 @@ describe MealController do
 
   context '#start' do
     it 'will put everything into motion' do
-      expect(con.start).to eq('')
+      expect(con.start('night, 1, 2, 3')).to eq('steak, potato, wine')
     end
   end
 

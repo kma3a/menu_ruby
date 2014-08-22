@@ -83,8 +83,8 @@ class MealController
     @morning = args[:morning]
   end
 
-  def start
-    place_order(MealViews::StartView.render)
+  def start(user = gets.chomp)
+    place_order(MealViews::StartView.render(user))
   end
 
   def place_order(string)
