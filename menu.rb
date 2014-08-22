@@ -6,13 +6,15 @@ class Meal
     @entree = args[:entree]
     @side = args[:side]
     @drink = args[:drink]
-    @dessert = args.fetch(:dessert, "error")
+    @dessert = args[:dessert] #.fetch(:dessert, "error")
     @repeat = args[:repeat]
   end
 
   def order(item_num, count)
     item = get_food(item_num) 
-    if count > 1
+    if item == nil
+      ['error']
+    elsif count > 1
       check_repeat(item, count)
     else
       [item]
@@ -77,4 +79,3 @@ class MealController
   end
 
 end
-

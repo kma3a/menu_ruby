@@ -3,7 +3,7 @@ require_relative "menu"
 describe Meal do
 
   let(:meal) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', dessert: 'melon pan', repeat: 'rice'})}
-  let(:meal2) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake'})}
+  let(:meal2) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', repeat: 'rice'})}
 
   context '#initialize' do
 
@@ -41,7 +41,7 @@ describe Meal do
     end
 
     it 'returns error if there is no dessert' do
-      expect(meal2.dessert).to eq("error")
+      expect(meal2.dessert).to eq(nil)
     end
   end
 
@@ -92,6 +92,10 @@ describe Meal do
 
     it 'returns item(xcount) if count > 1 and can repeat' do
       expect(meal.order(2,2)).to eq(['rice(x2)'])
+    end
+
+    it 'returns error if nil' do
+      expect(meal2.order(4,5)).to eq(["error"])
     end
   end
 
