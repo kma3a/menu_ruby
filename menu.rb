@@ -38,7 +38,7 @@ class MealController
         when 4
         order << meal.dessert
         else
-        "error"
+        order << "error"
       end
       unless index == (input.length-1)
         order << ", "
