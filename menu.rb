@@ -87,7 +87,7 @@ class MealController
     when "morning"
       morning.parse_order(input_array)
     when "night"
-      night.parse_order(input_array[1..-1])
+      night.parse_order(input_array)
     else
       ["error"]
     end
