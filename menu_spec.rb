@@ -82,6 +82,13 @@ describe Meal do
       expect(meal.check_repeat('rice', 2)).to eq("rice(x2)")
     end
   end
+  
+  context "#order" do
+    it 'if single will return single output' do
+      expect(meal.order(1, 1)).to eq('sushi')
+    end
+  
+  end
 
 end
 

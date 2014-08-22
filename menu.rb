@@ -10,6 +10,10 @@ class Meal
     @repeat = args[:repeat]
   end
 
+  def order(item_num, count)
+    get_food(item_num) 
+  end
+
   def get_food(num)
     case num 
       when 1
