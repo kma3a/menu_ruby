@@ -10,6 +10,19 @@ class Meal
     @repeat = args[:repeat]
   end
 
+  def parse_order(input)
+    num_count = 0
+    output = []
+    input.each do |num|
+      if output.last == "error"
+        break
+      end
+     num_count = input.count(num)
+     output += order(num, num_count) 
+    end
+    output
+  end
+
   def order(item_num, count)
     item = get_food(item_num) 
     if item == nil
@@ -57,25 +70,15 @@ night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake
 
 class MealController
 
-  attr_accessor :output
-  attr_reader :meal, :input
+  attr_accessor :output, :meal
+  attr_reader :night, :morning, :input
 
   def initialize(args)
-    @meal = args[:meal]
+    @night = args[:night]
+    @morning = args[:morning]
+    @meal = nil
     @input = args[:input]
     @output = []
-  end
-  
-  def parse_order
-    num_count = 0
-    input.each do |num|
-      if output.last == "error"
-        break
-      end
-     num_count = input.count(num)
-     self.output += meal.order(num, num_count) 
-    end
-    output
   end
 
 end

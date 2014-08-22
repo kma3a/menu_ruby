@@ -3,7 +3,7 @@ require_relative "menu"
 describe Meal do
 
   let(:meal) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', dessert: 'melon pan', repeat: 'rice'})}
-  let(:meal2) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', repeat: 'rice'})}
+  let(:meal2) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
 
   context '#initialize' do
 
@@ -80,6 +80,21 @@ describe Meal do
       expect(meal.check_repeat('sushi', 2)).to eq(["sushi", "error"])
     end
   end
+
+  context '#parse_order' do
+    it 'returns the order' do
+      expect(meal2.parse_order([1,2,3])).to eq(["eggs", "toast", "coffee"])
+    end
+
+    it 'stops at an error' do 
+      expect(meal2.parse_order([1,2,4])).to eq(["eggs", "toast", "error"])
+    end
+
+    it 'will have error if two in a row that can not be done' do 
+      expect(meal2.parse_order([1,1,2])).to eq(["eggs", "error"])
+    end
+
+  end
   
   context "#order" do
     it 'if single will return single output' do
@@ -103,12 +118,10 @@ end
 
 describe MealController do 
   
-  let(:meal) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
+  let(:morning) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
+  let(:night) {Meal.new({entree: 'steak', side:'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})}
   
-  let(:con) {MealController.new({meal: meal, input: [1,2,3]})}
-  let(:con2) {MealController.new({meal: meal, input: [1,2,3,5]})}
-  let(:con3) {MealController.new({meal: meal, input: [1,2,4,5]})}
-  let(:con4) {MealController.new({meal: meal, input: [1,1,2,3]})}
+  let(:con) {MealController.new({morning: morning, night: night})}
 
   context '#initialize' do
     it ' creates a controller object' do
@@ -121,40 +134,27 @@ describe MealController do
   end
 
   context '#meal' do
+    it 'should be nil when created' do
+      expect(con.meal).to eq(nil)
+    end
+  end
+
+  context '#morning' do
     it 'should be an instance of meal' do
-      expect(con.meal).to be_an_instance_of(Meal)
+      expect(con.morning).to be_an_instance_of(Meal)
+    end
+  end
+
+  context '#night' do
+    it 'should be an instance of meal' do
+      expect(con.night).to be_an_instance_of(Meal)
     end
   end
 
   context '#input' do
-    it 'should be a string' do
-      expect(con.input.is_a?(Array)).to eq(true)
+    it 'should be a nil' do
+      expect(con.input).to eq(nil)
     end
-
-    it 'returns as an array' do
-      expect(con.input).to eq([1,2,3])
-    end
-  end
-
-  context '#output' do
-    it 'should be an empty array' do
-      expect(con.output).to eq([])
-    end
-  end
-  
-  context '#parse_order' do
-    it 'returns the order' do
-      expect(con.parse_order).to eq(["eggs", "toast", "coffee"])
-    end
-
-    it 'stops at an error' do 
-      expect(con3.parse_order).to eq(["eggs", "toast", "error"])
-    end
-
-    it 'will have error if two in a row that can not be done' do 
-      expect(con4.parse_order).to eq(["eggs", "error"])
-    end
-
   end
 
 
