@@ -95,4 +95,14 @@ describe MealController do
     end 
   end
 
+  context '#get_food' do
+    it 'takes in number and outputs food' do
+      expect(con.get_food(1)).to eq("eggs")
+    end
+
+    it 'returns error if number is not in the selection' do
+      expect(con.get_food(5)).to eq("error")
+    end
+  end
+
 end

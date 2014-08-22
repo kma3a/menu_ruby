@@ -27,21 +27,25 @@ class MealController
   end
   
   def parse_order
-    input.each_with_index do |num, index|
-      case num 
-        when 1
-        order << meal.entree
-        when 2
-        order << meal.side
-        when 3
-        order << meal.drink
-        when 4
-        order << meal.dessert
-        else
-        order << "error"
-      end
+    input.each do |num|
+     order << get_food(num) 
     end
     order.join(", ")
+  end
+
+  def get_food(num)
+    case num 
+      when 1
+      meal.entree
+      when 2
+      meal.side
+      when 3
+      meal.drink
+      when 4
+      meal.dessert
+      else
+      "error"
+    end
   end
 end
 
