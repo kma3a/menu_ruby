@@ -151,5 +151,19 @@ describe MealController do
     end
   end
 
+end
+
+describe MealViews do
+
+  extend MealViews
+    let(:user_input) {'morning, 1, 2, 3'}
+
+    it 'gets the users order' do
+      expect(MealViews::StartView.render(user_input)).to eq('morning, 1, 2, 3')
+    end
+
+  # context '#regular_view' do
+  #   expect(view.regular_view(["eggs", "toast", "error"])).to eq("eggs, toast, error")
+  # end
 
 end

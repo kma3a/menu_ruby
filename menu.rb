@@ -81,3 +81,16 @@ class MealController
   end
 
 end
+
+
+module MealViews
+
+  class StartView
+    def self.render(user_input = gets.chomp)
+      'Input your order ex: morning, 1, 2, 3'
+      user_input
+    end
+  end
+
+
+end
