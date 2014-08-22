@@ -140,15 +140,15 @@ describe MealController do
   
   context '#parse_order' do
     it 'returns the order' do
-      expect(con.parse_order).to eq("eggs, toast, coffee")
+      expect(con.parse_order).to eq(["eggs", "toast", "coffee"])
     end
 
     it 'stops at an error' do 
-      expect(con3.parse_order).to eq("eggs, toast, error")
+      expect(con3.parse_order).to eq(["eggs", "toast", "error"])
     end
 
     it 'will have error if two in a row that can not be done' do 
-      expect(con4.parse_order).to eq("eggs, error")
+      expect(con4.parse_order).to eq(["eggs", "error"])
     end
 
   end

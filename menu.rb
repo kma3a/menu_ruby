@@ -73,7 +73,7 @@ class MealController
      num_count = input.count(num)
      self.output += meal.order(num, num_count) 
     end
-    output.join(", ")
+    output
   end
 
 end
