@@ -14,6 +14,7 @@ class Meal
     num_count = 0
     output = []
     input.each do |num|
+      num = num.to_i
       if output.last == "error"
         break
       end
@@ -78,6 +79,18 @@ class MealController
     @morning = args[:morning]
     @input = args[:input]
     @output = []
+  end
+
+  def place_order(string)
+    input_array = string.split(", ")
+    case input_array.shift
+    when "morning"
+      morning.parse_order(input_array)
+    when "night"
+      night.parse_order(input_array[1..-1])
+    else
+      ["error"]
+    end
   end
 
 end

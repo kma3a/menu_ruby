@@ -145,9 +145,9 @@ describe MealController do
     end
   end
 
-  context '#input' do
-    it 'should be a nil' do
-      expect(con.input).to eq(nil)
+  context '#place_order' do
+    it 'takes order and sends it to the correct model' do
+      expect(con.place_order('morning, 1, 2, 3')).to eq(["eggs", "toast", "coffee"])
     end
   end
 
