@@ -8,6 +8,21 @@ class Meal
     @drink = args[:drink]
     @dessert = args.fetch(:dessert, "error")
   end
+  def get_food(num)
+    case num 
+      when 1
+      entree
+      when 2
+      side
+      when 3
+      drink
+      when 4
+      dessert
+      else
+      "error"
+    end
+  end
+ 
 
 end
 
@@ -31,24 +46,10 @@ class MealController
       if order.last == "error"
         break
       end
-     order << get_food(num) 
+     order << meal.get_food(num) 
     end
     order.join(", ")
   end
 
-  def get_food(num)
-    case num 
-      when 1
-      meal.entree
-      when 2
-      meal.side
-      when 3
-      meal.drink
-      when 4
-      meal.dessert
-      else
-      "error"
-    end
-  end
 end
 

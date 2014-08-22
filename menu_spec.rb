@@ -44,6 +44,17 @@ describe Meal do
       expect(meal2.dessert).to eq("error")
     end
   end
+
+  context '#get_food' do
+    it 'takes in number and outputs food' do
+      expect(meal.get_food(1)).to eq("sushi")
+    end
+
+    it 'returns error if number is not in the selection' do
+      expect(meal2.get_food(5)).to eq("error")
+    end
+  end
+
 end
 
 describe MealController do 
@@ -98,16 +109,6 @@ describe MealController do
     it 'returns error if invalid selection' do
       expect(con2.parse_order).to eq("eggs, toast, coffee, error")
     end 
-  end
-
-  context '#get_food' do
-    it 'takes in number and outputs food' do
-      expect(con.get_food(1)).to eq("eggs")
-    end
-
-    it 'returns error if number is not in the selection' do
-      expect(con.get_food(5)).to eq("error")
-    end
   end
 
 end
