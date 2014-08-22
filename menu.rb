@@ -11,7 +11,12 @@ class Meal
   end
 
   def order(item_num, count)
-    get_food(item_num) 
+    item = get_food(item_num) 
+    if count > 1
+      check_repeat(item, count)
+    else
+      item
+    end
   end
 
   def get_food(num)
@@ -29,19 +34,15 @@ class Meal
     end
   end
 
-  def check_error(item, count)
-    if !(can_repeat(item)) && count > 1
-      return [item, "error"]
-    end
-  end
-
   def can_repeat(item)
     item == repeat
   end
 
   def check_repeat(item, count)
-    if can_repeat(item) && count > 1
-      return "#{item}(x#{count})"
+    if can_repeat(item)
+      "#{item}(x#{count})"
+    else
+      [item,'error']
     end
   end
  

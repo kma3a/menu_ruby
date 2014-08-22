@@ -71,15 +71,13 @@ describe Meal do
     end
   end
   
-  context '#check_error' do
-    it 'should return error if the pervious item can not be repeated' do
-      expect(meal.check_error('sushi', 2)).to eq(["sushi", "error"])
-    end
-  end
-
   context '#check_repeat' do
     it 'returns item with count if it can repeat' do
       expect(meal.check_repeat('rice', 2)).to eq("rice(x2)")
+    end
+
+    it 'should return error if the pervious item can not be repeated' do
+      expect(meal.check_repeat('sushi', 2)).to eq(["sushi", "error"])
     end
   end
   
@@ -87,7 +85,14 @@ describe Meal do
     it 'if single will return single output' do
       expect(meal.order(1, 1)).to eq('sushi')
     end
-  
+
+    it 'returns array if count > 1 and can not repeat' do
+      expect(meal.order(1,2)).to eq(['sushi','error'])
+    end
+
+    it 'returns item(xcount) if count > 1 and can repeat' do
+      expect(meal.order(2,2)).to eq('rice(x2)')
+    end
   end
 
 end
@@ -99,6 +104,7 @@ describe MealController do
   let(:con) {MealController.new({meal: meal, input: [1,2,3]})}
   let(:con2) {MealController.new({meal: meal, input: [1,2,3,5]})}
   let(:con3) {MealController.new({meal: meal, input: [1,2,4,5]})}
+  let(:con4) {MealController.new({meal: meal, input: [1,1,2,3]})}
 
   context '#initialize' do
     it ' creates a controller object' do
