@@ -6,13 +6,33 @@ class Meal
     @entree = args[:entree]
     @side = args[:side]
     @drink = args[:drink]
-    @dessert = args.fetch(:dessert, "error")
+    @dessert = args[:dessert] #.fetch(:dessert, "error")
     @repeat = args[:repeat]
+  end
+
+  def make_integer(string_array)
+    string_array.map {|char| char.to_i}
+  end
+
+  def parse_order(input)
+    input = make_integer(input)
+    num_count = 0
+    output = []
+    input.each do |num|
+      if output.last == "error"
+        break
+      end
+     num_count = input.count(num)
+     output += order(num, num_count) 
+    end
+    output.uniq
   end
 
   def order(item_num, count)
     item = get_food(item_num) 
-    if count > 1
+    if item == nil
+      ['error']
+    elsif count > 1
       check_repeat(item, count)
     else
       [item]
@@ -55,26 +75,49 @@ night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake
 
 class MealController
 
-  attr_accessor :output
-  attr_reader :meal, :input
+  attr_accessor :output, :meal
+  attr_reader :night, :morning, :input
 
   def initialize(args)
-    @meal = args[:meal]
-    @input = args[:input]
-    @output = []
+    @night = args[:night]
+    @morning = args[:morning]
   end
-  
-  def parse_order
-    num_count = 0
-    input.each do |num|
-      if output.last == "error"
-        break
-      end
-     num_count = input.count(num)
-     self.output += meal.order(num, num_count) 
+
+  def start(user = gets.chomp)
+    place_order(MealViews::StartView.render(user))
+  end
+
+  def place_order(string)
+    input_array = string.split(", ")
+    case input_array.shift
+    when "morning"
+      MealViews::RegularView.render(morning.parse_order(input_array))
+    when "night"
+      MealViews::RegularView.render(night.parse_order(input_array))
+    else
+      MealViews::RegularView.render(["error"])
     end
-    output
   end
 
 end
 
+
+module MealViews
+
+  class StartView
+    def self.render(user_input = gets.chomp)
+      'Input your order ex: morning, 1, 2, 3'
+      user_input
+    end
+  end
+
+  class RegularView
+    def self.render(output)
+      output.join(", ")
+    end
+  end
+
+end
+
+meal1 = MealController.new({morning: morning, night:night})
+puts meal1.start

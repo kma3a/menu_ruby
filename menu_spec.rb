@@ -3,7 +3,7 @@ require_relative "menu"
 describe Meal do
 
   let(:meal) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', dessert: 'melon pan', repeat: 'rice'})}
-  let(:meal2) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake'})}
+  let(:meal2) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
 
   context '#initialize' do
 
@@ -41,7 +41,7 @@ describe Meal do
     end
 
     it 'returns error if there is no dessert' do
-      expect(meal2.dessert).to eq("error")
+      expect(meal2.dessert).to eq(nil)
     end
   end
 
@@ -80,6 +80,24 @@ describe Meal do
       expect(meal.check_repeat('sushi', 2)).to eq(["sushi", "error"])
     end
   end
+
+  context '#parse_order' do
+    it 'returns the order' do
+      expect(meal2.parse_order([1,2,3])).to eq(["eggs", "toast", "coffee"])
+    end
+
+    it 'stops at an error' do 
+      expect(meal2.parse_order([1,2,4])).to eq(["eggs", "toast", "error"])
+    end
+
+    it 'will have error if two in a row that can not be done' do 
+      expect(meal2.parse_order([1,1,2])).to eq(["eggs", "error"])
+    end
+
+    it 'will only have ' do 
+      expect(meal2.parse_order([1, 2, 3, 3])).to eq(["eggs", "toast", "coffee(x2)"])
+    end
+  end
   
   context "#order" do
     it 'if single will return single output' do
@@ -93,18 +111,26 @@ describe Meal do
     it 'returns item(xcount) if count > 1 and can repeat' do
       expect(meal.order(2,2)).to eq(['rice(x2)'])
     end
+
+    it 'returns error if nil' do
+      expect(meal2.order(4,5)).to eq(["error"])
+    end
+  end
+
+  context '#make_integer' do
+    it 'returns the input as an array of integers' do
+      expect(meal.make_integer(["1", "2", "3"])).to eq([1, 2, 3])
+    end
   end
 
 end
 
 describe MealController do 
   
-  let(:meal) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
+  let(:morning) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
+  let(:night) {Meal.new({entree: 'steak', side:'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})}
   
-  let(:con) {MealController.new({meal: meal, input: [1,2,3]})}
-  let(:con2) {MealController.new({meal: meal, input: [1,2,3,5]})}
-  let(:con3) {MealController.new({meal: meal, input: [1,2,4,5]})}
-  let(:con4) {MealController.new({meal: meal, input: [1,1,2,3]})}
+  let(:con) {MealController.new({morning: morning, night: night})}
 
   context '#initialize' do
     it ' creates a controller object' do
@@ -116,42 +142,51 @@ describe MealController do
     end
   end
 
-  context '#meal' do
+  context '#morning' do
     it 'should be an instance of meal' do
-      expect(con.meal).to be_an_instance_of(Meal)
+      expect(con.morning).to be_an_instance_of(Meal)
     end
   end
 
-  context '#input' do
-    it 'should be a string' do
-      expect(con.input.is_a?(Array)).to eq(true)
-    end
-
-    it 'returns as an array' do
-      expect(con.input).to eq([1,2,3])
+  context '#night' do
+    it 'should be an instance of meal' do
+      expect(con.night).to be_an_instance_of(Meal)
     end
   end
 
-  context '#output' do
-    it 'should be an empty array' do
-      expect(con.output).to eq([])
+  context '#place_order' do
+    it 'takes order and sends it to the morning model' do
+      expect(con.place_order('morning, 1, 2, 3')).to eq("eggs, toast, coffee")
+    end
+
+    it 'will send to the night model' do
+      expect(con.place_order('night, 1, 2, 3')).to eq("steak, potato, wine")
+    end
+
+    it 'outputs error if nothing is right' do
+      expect(con.place_order("hi")).to eq("error")
     end
   end
-  
-  context '#parse_order' do
-    it 'returns the order' do
-      expect(con.parse_order).to eq(["eggs", "toast", "coffee"])
-    end
 
-    it 'stops at an error' do 
-      expect(con3.parse_order).to eq(["eggs", "toast", "error"])
+  context '#start' do
+    it 'will put everything into motion' do
+      expect(con.start('night, 1, 2, 3')).to eq('steak, potato, wine')
     end
-
-    it 'will have error if two in a row that can not be done' do 
-      expect(con4.parse_order).to eq(["eggs", "error"])
-    end
-
   end
 
+end
+
+describe MealViews do
+
+  extend MealViews
+    let(:user_input) {'morning, 1, 2, 3'}
+
+    it 'gets the users order' do
+      expect(MealViews::StartView.render(user_input)).to eq('morning, 1, 2, 3')
+    end
+
+  it 'displays a list of what you ordered' do
+    expect(MealViews::RegularView.render(["eggs", "toast", "error"])).to eq("eggs, toast, error")
+  end
 
 end
