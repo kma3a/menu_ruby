@@ -94,6 +94,9 @@ describe Meal do
       expect(meal2.parse_order([1,1,2])).to eq(["eggs", "error"])
     end
 
+    it 'will only have ' do 
+      expect(meal2.parse_order([1, 2, 3, 3])).to eq(["eggs", "toast", "coffee(x2)"])
+    end
   end
   
   context "#order" do
@@ -111,6 +114,12 @@ describe Meal do
 
     it 'returns error if nil' do
       expect(meal2.order(4,5)).to eq(["error"])
+    end
+  end
+
+  context '#make_integer' do
+    it 'returns the input as an array of integers' do
+      expect(meal.make_integer(["1", "2", "3"])).to eq([1, 2, 3])
     end
   end
 
@@ -147,11 +156,21 @@ describe MealController do
 
   context '#place_order' do
     it 'takes order and sends it to the morning model' do
-      expect(con.place_order('morning, 1, 2, 3')).to eq(["eggs", "toast", "coffee"])
+      expect(con.place_order('morning, 1, 2, 3')).to eq("eggs, toast, coffee")
     end
 
     it 'will send to the night model' do
-      expect(con.place_order('night, 1, 2, 3')).to eq(["steak", "potato", "wine"])
+      expect(con.place_order('night, 1, 2, 3')).to eq("steak, potato, wine")
+    end
+
+    it 'outputs error if nothing is right' do
+      expect(con.place_order("hi")).to eq("error")
+    end
+  end
+
+  context '#start' do
+    it 'will put everything into motion' do
+      expect(con.start).to eq('')
     end
   end
 

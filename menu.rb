@@ -10,18 +10,22 @@ class Meal
     @repeat = args[:repeat]
   end
 
+  def make_integer(string_array)
+    string_array.map {|char| char.to_i}
+  end
+
   def parse_order(input)
+    input = make_integer(input)
     num_count = 0
     output = []
     input.each do |num|
-      num = num.to_i
       if output.last == "error"
         break
       end
      num_count = input.count(num)
      output += order(num, num_count) 
     end
-    output
+    output.uniq
   end
 
   def order(item_num, count)
@@ -77,19 +81,21 @@ class MealController
   def initialize(args)
     @night = args[:night]
     @morning = args[:morning]
-    @input = args[:input]
-    @output = []
+  end
+
+  def start
+    place_order(MealViews::StartView.render)
   end
 
   def place_order(string)
     input_array = string.split(", ")
     case input_array.shift
     when "morning"
-      morning.parse_order(input_array)
+      MealViews::RegularView.render(morning.parse_order(input_array))
     when "night"
-      night.parse_order(input_array)
+      MealViews::RegularView.render(night.parse_order(input_array))
     else
-      ["error"]
+      MealViews::RegularView.render(["error"])
     end
   end
 
@@ -112,3 +118,6 @@ module MealViews
   end
 
 end
+
+meal1 = MealController.new({morning: morning, night:night})
+puts meal1.start
