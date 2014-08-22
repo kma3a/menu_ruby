@@ -6,7 +6,7 @@ class Meal
     @entree = args[:entree]
     @side = args[:side]
     @drink = args[:drink]
-    @dessert = args[:dessert]
+    @dessert = args.fetch(:dessert, "error")
   end
 
 end

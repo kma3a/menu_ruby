@@ -40,8 +40,8 @@ describe Meal do
       expect(meal.dessert).to eq('melon pan')
     end
 
-    it 'returns nil if there is no dessert' do
-      expect(meal2.dessert).to eq(nil)
+    it 'returns error if there is no dessert' do
+      expect(meal2.dessert).to eq("error")
     end
   end
 end
