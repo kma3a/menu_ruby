@@ -2,7 +2,7 @@ require_relative "menu"
 
 describe Meal do
 
-  let(:meal) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', dessert: 'melon pan'})}
+  let(:meal) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake', dessert: 'melon pan', repeat: 'rice'})}
   let(:meal2) {Meal.new({entree: 'sushi', side: 'rice', drink: 'sake'})}
 
   context '#initialize' do
@@ -45,6 +45,12 @@ describe Meal do
     end
   end
 
+  context '#repeat' do
+    it 'returns an item that can be repeated' do
+      expect(meal.repeat).to eq('rice')
+    end
+  end
+
   context '#get_food' do
     it 'takes in number and outputs food' do
       expect(meal.get_food(1)).to eq("sushi")
@@ -52,6 +58,16 @@ describe Meal do
 
     it 'returns error if number is not in the selection' do
       expect(meal2.get_food(5)).to eq("error")
+    end
+  end
+  
+  context '#can_repeat' do
+    it 'returns true if the item can be repeated' do
+      expect(meal.can_repeat('rice')).to eq(true)
+    end
+
+    it 'returns false if the item can not be repeated' do
+      expect(meal.can_repeat('sushi')).to eq(false)
     end
   end
 
@@ -110,5 +126,6 @@ describe MealController do
       expect(con2.parse_order).to eq("eggs, toast, coffee, error")
     end 
   end
+
 
 end

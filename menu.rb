@@ -1,12 +1,13 @@
 class Meal
   
-  attr_reader :entree, :side, :drink, :dessert
+  attr_reader :entree, :side, :drink, :dessert, :repeat
 
   def initialize(args)
     @entree = args[:entree]
     @side = args[:side]
     @drink = args[:drink]
     @dessert = args.fetch(:dessert, "error")
+    @repeat = args[:repeat]
   end
   def get_food(num)
     case num 
@@ -22,13 +23,17 @@ class Meal
       "error"
     end
   end
+
+  def can_repeat(item)
+    item == repeat
+  end
  
 
 end
 
 
-morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})
-night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake'})
+morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'cofffee'})
+night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})
 
 class MealController
 
