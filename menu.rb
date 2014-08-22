@@ -9,6 +9,7 @@ class Meal
     @dessert = args.fetch(:dessert, "error")
     @repeat = args[:repeat]
   end
+
   def get_food(num)
     case num 
       when 1
@@ -21,6 +22,12 @@ class Meal
       dessert
       else
       "error"
+    end
+  end
+
+  def check_error(item, count)
+    if !(can_repeat(item)) && count > 1
+      return [item, "error"]
     end
   end
 

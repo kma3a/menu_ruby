@@ -70,6 +70,12 @@ describe Meal do
       expect(meal.can_repeat('sushi')).to eq(false)
     end
   end
+  
+  context '#check_error' do
+    it 'should return error if the pervious item can not be repeated' do
+      expect(meal.check_error('sushi', 2)).to eq(["sushi", "error"])
+    end
+  end
 
 end
 
