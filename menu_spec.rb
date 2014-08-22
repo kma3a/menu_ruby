@@ -73,7 +73,7 @@ describe Meal do
   
   context '#check_repeat' do
     it 'returns item with count if it can repeat' do
-      expect(meal.check_repeat('rice', 2)).to eq("rice(x2)")
+      expect(meal.check_repeat('rice', 2)).to eq(["rice(x2)"])
     end
 
     it 'should return error if the pervious item can not be repeated' do
@@ -83,7 +83,7 @@ describe Meal do
   
   context "#order" do
     it 'if single will return single output' do
-      expect(meal.order(1, 1)).to eq('sushi')
+      expect(meal.order(1, 1)).to eq(['sushi'])
     end
 
     it 'returns array if count > 1 and can not repeat' do
@@ -91,7 +91,7 @@ describe Meal do
     end
 
     it 'returns item(xcount) if count > 1 and can repeat' do
-      expect(meal.order(2,2)).to eq('rice(x2)')
+      expect(meal.order(2,2)).to eq(['rice(x2)'])
     end
   end
 
@@ -99,7 +99,7 @@ end
 
 describe MealController do 
   
-  let(:meal) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee'})}
+  let(:meal) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
   
   let(:con) {MealController.new({meal: meal, input: [1,2,3]})}
   let(:con2) {MealController.new({meal: meal, input: [1,2,3,5]})}
@@ -132,9 +132,9 @@ describe MealController do
     end
   end
 
-  context '#order' do
+  context '#output' do
     it 'should be an empty array' do
-      expect(con.order).to eq([])
+      expect(con.output).to eq([])
     end
   end
   
@@ -147,9 +147,10 @@ describe MealController do
       expect(con3.parse_order).to eq("eggs, toast, error")
     end
 
-    it 'returns error if invalid selection' do
-      expect(con2.parse_order).to eq("eggs, toast, coffee, error")
-    end 
+    it 'will have error if two in a row that can not be done' do 
+      expect(con4.parse_order).to eq("eggs, error")
+    end
+
   end
 
 

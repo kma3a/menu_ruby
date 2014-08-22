@@ -15,7 +15,7 @@ class Meal
     if count > 1
       check_repeat(item, count)
     else
-      item
+      [item]
     end
   end
 
@@ -40,7 +40,7 @@ class Meal
 
   def check_repeat(item, count)
     if can_repeat(item)
-      "#{item}(x#{count})"
+      ["#{item}(x#{count})"]
     else
       [item,'error']
     end
@@ -55,23 +55,25 @@ night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake
 
 class MealController
 
-  attr_accessor :order
+  attr_accessor :output
   attr_reader :meal, :input
 
   def initialize(args)
     @meal = args[:meal]
     @input = args[:input]
-    @order = []
+    @output = []
   end
   
   def parse_order
+    num_count = 0
     input.each do |num|
-      if order.last == "error"
+      if output.last == "error"
         break
       end
-     order << meal.get_food(num) 
+     num_count = input.count(num)
+     self.output += meal.order(num, num_count) 
     end
-    order.join(", ")
+    output.join(", ")
   end
 
 end
