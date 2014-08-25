@@ -85,7 +85,22 @@ describe Meal do
     end
   end
 
+  context '#check_input' do
+    it 'returns true if input.lenght == 0' do
+      expect(meal2.check_input([])).to eq(true)
+    end
+
+    it 'returns false if input.lenght != 0' do
+      expect(meal2.check_input([1,2,3])).to eq(false)
+    end
+  end
+
   context '#parse_order' do
+
+    it 'returns error if no order' do
+      expect(meal2.parse_order([])).to eq(['error'])
+    end
+
     it 'returns the order' do
       expect(meal2.parse_order([1,2,3])).to eq(["eggs", "toast", "coffee"])
     end
@@ -104,7 +119,7 @@ describe Meal do
 
     it 'will parse orders in order' do
       expect(meal2.parse_order([2,4,3,1])).to eq(["eggs", "toast", "coffee", "error"])
-      end
+    end
   end
   
   context "#order" do
@@ -167,6 +182,7 @@ describe MealController do
   end
 
   context '#place_order' do
+
     it 'takes order and sends it to the morning model' do
       expect(con.place_order('morning, 1, 2, 3')).to eq("eggs, toast, coffee")
     end
