@@ -79,6 +79,10 @@ describe Meal do
     it 'should return error if the pervious item can not be repeated' do
       expect(meal.check_repeat('sushi', 2)).to eq(["sushi", "error"])
     end
+
+    it 'returns item with count if it can repeat' do
+      expect(meal2.check_repeat('coffee', 3)).to eq(["coffee(x3)"])
+    end
   end
 
   context '#parse_order' do
@@ -94,9 +98,13 @@ describe Meal do
       expect(meal2.parse_order([1,1,2])).to eq(["eggs", "error"])
     end
 
-    it 'will only have ' do 
+    it 'will only have one coffee(x2)' do 
       expect(meal2.parse_order([1, 2, 3, 3])).to eq(["eggs", "toast", "coffee(x2)"])
     end
+
+    it 'will parse orders in order' do
+      expect(meal2.parse_order([2,4,3,1])).to eq(["eggs", "toast", "coffee", "error"])
+      end
   end
   
   context "#order" do
@@ -114,6 +122,10 @@ describe Meal do
 
     it 'returns error if nil' do
       expect(meal2.order(4,5)).to eq(["error"])
+    end
+
+    it 'returns error if nil' do
+      expect(meal2.order(3,3)).to eq(["coffee(x3)"])
     end
   end
 
@@ -157,6 +169,14 @@ describe MealController do
   context '#place_order' do
     it 'takes order and sends it to the morning model' do
       expect(con.place_order('morning, 1, 2, 3')).to eq("eggs, toast, coffee")
+    end
+
+    it 'takes order and sends it to the morning model' do
+      expect(con.place_order('Morning, 1, 2, 3')).to eq("eggs, toast, coffee")
+    end
+
+    it 'takes order and sends it to the morning model' do
+      expect(con.place_order('Morning,1,2,3')).to eq("eggs, toast, coffee")
     end
 
     it 'will send to the night model' do

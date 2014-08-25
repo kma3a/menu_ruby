@@ -18,7 +18,7 @@ class Meal
     input = make_integer(input)
     num_count = 0
     output = []
-    input.each do |num|
+    input.sort.each do |num|
       if output.last == "error"
         break
       end
@@ -69,14 +69,9 @@ class Meal
 
 end
 
-
-morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'cofffee'})
-night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})
-
 class MealController
 
-  attr_accessor :output, :meal
-  attr_reader :night, :morning, :input
+  attr_reader :night, :morning
 
   def initialize(args)
     @night = args[:night]
@@ -88,8 +83,8 @@ class MealController
   end
 
   def place_order(string)
-    input_array = string.split(", ")
-    case input_array.shift
+    input_array = string.split(",")
+    case input_array.shift.downcase
     when "morning"
       MealViews::RegularView.render(morning.parse_order(input_array))
     when "night"
@@ -106,7 +101,6 @@ module MealViews
 
   class StartView
     def self.render(user_input = gets.chomp)
-      'Input your order ex: morning, 1, 2, 3'
       user_input
     end
   end
@@ -118,6 +112,10 @@ module MealViews
   end
 
 end
+
+morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})
+night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})
+
 
 meal1 = MealController.new({morning: morning, night:night})
 puts meal1.start
