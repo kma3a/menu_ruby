@@ -14,7 +14,12 @@ class Meal
     string_array.map {|char| char.to_i}
   end
 
+  def check_input(input)
+    input.length == 0
+  end
+
   def parse_order(input)
+    return ["error"] if check_input(input)
     input = make_integer(input)
     num_count = 0
     output = []
@@ -82,8 +87,13 @@ class MealController
     place_order(MealViews::StartView.render(user))
   end
 
+  def check_input(input)
+    input.length == 1
+  end
+
   def place_order(string)
     input_array = string.split(",")
+    return "error" if check_input(input_array)
     case input_array.shift.downcase
     when "morning"
       MealViews::RegularView.render(morning.parse_order(input_array))
