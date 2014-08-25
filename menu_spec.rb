@@ -98,7 +98,7 @@ describe Meal do
       expect(meal2.parse_order([1,1,2])).to eq(["eggs", "error"])
     end
 
-    it 'will only have ' do 
+    it 'will only have one coffee(x2)' do 
       expect(meal2.parse_order([1, 2, 3, 3])).to eq(["eggs", "toast", "coffee(x2)"])
     end
 
@@ -122,6 +122,10 @@ describe Meal do
 
     it 'returns error if nil' do
       expect(meal2.order(4,5)).to eq(["error"])
+    end
+
+    it 'returns error if nil' do
+      expect(meal2.order(3,3)).to eq(["coffee(x3)"])
     end
   end
 

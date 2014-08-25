@@ -70,7 +70,7 @@ class Meal
 end
 
 
-morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'cofffee'})
+morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})
 night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})
 
 class MealController
