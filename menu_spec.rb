@@ -97,6 +97,10 @@ describe Meal do
     it 'will only have ' do 
       expect(meal2.parse_order([1, 2, 3, 3])).to eq(["eggs", "toast", "coffee(x2)"])
     end
+
+    it 'will parse orders in order' do
+      expect(meal2.parse_order([2,4,3,1])).to eq(["eggs", "toast", "coffee", "error"])
+      end
   end
   
   context "#order" do

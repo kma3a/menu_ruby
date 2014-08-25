@@ -18,7 +18,7 @@ class Meal
     input = make_integer(input)
     num_count = 0
     output = []
-    input.each do |num|
+    input.sort.each do |num|
       if output.last == "error"
         break
       end
