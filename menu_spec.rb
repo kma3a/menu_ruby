@@ -79,6 +79,10 @@ describe Meal do
     it 'should return error if the pervious item can not be repeated' do
       expect(meal.check_repeat('sushi', 2)).to eq(["sushi", "error"])
     end
+
+    it 'returns item with count if it can repeat' do
+      expect(meal2.check_repeat('coffee', 3)).to eq(["coffee(x3)"])
+    end
   end
 
   context '#parse_order' do
