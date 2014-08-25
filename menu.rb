@@ -88,8 +88,8 @@ class MealController
   end
 
   def place_order(string)
-    input_array = string.split(", ")
-    case input_array.shift
+    input_array = string.split(",")
+    case input_array.shift.downcase
     when "morning"
       MealViews::RegularView.render(morning.parse_order(input_array))
     when "night"

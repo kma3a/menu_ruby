@@ -171,6 +171,14 @@ describe MealController do
       expect(con.place_order('morning, 1, 2, 3')).to eq("eggs, toast, coffee")
     end
 
+    it 'takes order and sends it to the morning model' do
+      expect(con.place_order('Morning, 1, 2, 3')).to eq("eggs, toast, coffee")
+    end
+
+    it 'takes order and sends it to the morning model' do
+      expect(con.place_order('Morning,1,2,3')).to eq("eggs, toast, coffee")
+    end
+
     it 'will send to the night model' do
       expect(con.place_order('night, 1, 2, 3')).to eq("steak, potato, wine")
     end
