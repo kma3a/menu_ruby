@@ -153,8 +153,8 @@ end
 
 describe MealController do 
   
-  let(:morning) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})}
-  let(:night) {Meal.new({entree: 'steak', side:'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})}
+  let(:morning) {Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: '3'})}
+  let(:night) {Meal.new({entree: 'steak', side:'potato', drink: 'wine', dessert: 'cake', repeat: '2'})}
   
   let(:con) {MealController.new({morning: morning, night: night})}
 
@@ -179,7 +179,26 @@ describe MealController do
       expect(con.meals["night"]).to be_an_instance_of(Meal)
     end
   end
+  
+  context '#start' do
+    it 'will put everything into motion' do
+      expect(con.start('night, 1, 2, 3')).to eq('steak, potato, wine')
+    end
 
+    it 'will work for the morning as well' do
+      expect(con.start('morning, 1, 3, 3, 2')).to eq('eggs, toast, coffee(x2)')
+    end
+
+    it 'will show error at the right time' do
+      expect(con.start("morning")).to eq("error")
+    end
+
+    it 'will show error if not valid' do
+      expect(con.start("HI How ARe YOu?n ")).to eq('error')
+    end
+  end
+
+=begin
   context '#place_order' do
 
     it 'takes order and sends it to the morning model' do
@@ -202,13 +221,7 @@ describe MealController do
       expect(con.place_order("hi")).to eq("error")
     end
   end
-
-  context '#start' do
-    it 'will put everything into motion' do
-      expect(con.start('night, 1, 2, 3')).to eq('steak, potato, wine')
-    end
-  end
-
+=end
 end
 
 describe MealViews do

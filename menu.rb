@@ -30,9 +30,7 @@ private
 
   def order(item_num, count)
     food = get_food(item_num) 
-    if food == 'error'
-      ['error']
-    elsif count > 1
+    if count > 1
       check_repeat(item_num, count)
     else
       [food]
@@ -70,6 +68,8 @@ class MealController
     place_order(MealViews::StartView.render(user))
   end
 
+private
+
   def check_input(input)
     input.length <= 1
   end
@@ -77,7 +77,6 @@ class MealController
   def place_order(string)
     input_array = string.split(", ")
     return "error" if check_input(input_array)
-    p input_array
     MealViews::RegularView.render(meals[input_array.shift.downcase].get_order(input_array))
   end
 
