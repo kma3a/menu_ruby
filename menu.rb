@@ -1,26 +1,21 @@
 class Meal
   
-  attr_reader :entree, :side, :drink, :dessert, :repeat
+  attr_reader :item
 
   def initialize(args)
-    @entree = args[:entree]
-    @side = args[:side]
-    @drink = args[:drink]
-    @dessert = args[:dessert] #.fetch(:dessert, "error")
-    @repeat = args[:repeat]
+    @item = { "1" => args[:entree],
+    "2" => args[:side],
+    "3" => args[:drink],
+    "4" => args.fetch(:dessert, "error"),
+    "repeat" => args[:repeat]}
   end
 
-  def make_integer(string_array)
-    string_array.map {|char| char.to_i}
+  def get_order(input)
+    return ["error"] if input.empty?
+    parse_order(input)
   end
-
-  def check_input(input)
-    input.length == 0
-  end
-
+private
   def parse_order(input)
-    return ["error"] if check_input(input)
-    input = make_integer(input)
     num_count = 0
     output = []
     input.sort.each do |num|
@@ -34,40 +29,27 @@ class Meal
   end
 
   def order(item_num, count)
-    item = get_food(item_num) 
-    if item == nil
-      ['error']
-    elsif count > 1
-      check_repeat(item, count)
+    food = get_food(item_num) 
+    if count > 1
+      check_repeat(item_num, count)
     else
-      [item]
+      [food]
     end
   end
 
   def get_food(num)
-    case num 
-      when 1
-      entree
-      when 2
-      side
-      when 3
-      drink
-      when 4
-      dessert
-      else
-      "error"
-    end
+    item[num]
   end
 
-  def can_repeat(item)
-    item == repeat
+  def can_repeat(item_num)
+    item_num == item["repeat"]
   end
 
-  def check_repeat(item, count)
-    if can_repeat(item)
-      ["#{item}(x#{count})"]
+  def check_repeat(item_num, count)
+    if can_repeat(item_num)
+      ["#{item[item_num]}(x#{count})"]
     else
-      [item,'error']
+      [item[item_num],'error']
     end
   end
  
@@ -76,32 +58,26 @@ end
 
 class MealController
 
-  attr_reader :night, :morning
+  attr_reader :meals
 
   def initialize(args)
-    @night = args[:night]
-    @morning = args[:morning]
+    @meals = {"morning" => args[:morning], "night" => args[:night]}
   end
 
   def start(user = gets.chomp)
     place_order(MealViews::StartView.render(user))
   end
 
+private
+
   def check_input(input)
-    input.length == 1
+    input.length <= 1
   end
 
   def place_order(string)
-    input_array = string.split(",")
+    input_array = string.split(", ")
     return "error" if check_input(input_array)
-    case input_array.shift.downcase
-    when "morning"
-      MealViews::RegularView.render(morning.parse_order(input_array))
-    when "night"
-      MealViews::RegularView.render(night.parse_order(input_array))
-    else
-      MealViews::RegularView.render(["error"])
-    end
+    MealViews::RegularView.render(meals[input_array.shift.downcase].get_order(input_array))
   end
 
 end
@@ -123,8 +99,8 @@ module MealViews
 
 end
 
-morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: 'coffee'})
-night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake', repeat: 'potato'})
+morning = Meal.new({entree: 'eggs', side: 'toast', drink: 'coffee', repeat: '3'})
+night = Meal.new({entree: 'steak', side: 'potato', drink: 'wine', dessert: 'cake', repeat: '2'})
 
 
 meal1 = MealController.new({morning: morning, night:night})
