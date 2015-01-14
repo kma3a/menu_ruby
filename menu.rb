@@ -76,11 +76,10 @@ end
 
 class MealController
 
-  attr_reader :night, :morning
+  attr_reader :meals
 
   def initialize(args)
-    @night = args[:night]
-    @morning = args[:morning]
+    @meals = {"morning" => args[:morning], "night" => args[:night]}
   end
 
   def start(user = gets.chomp)
@@ -88,20 +87,13 @@ class MealController
   end
 
   def check_input(input)
-    input.length == 1
+    input.length <= 1
   end
 
   def place_order(string)
     input_array = string.split(",")
     return "error" if check_input(input_array)
-    case input_array.shift.downcase
-    when "morning"
-      MealViews::RegularView.render(morning.parse_order(input_array))
-    when "night"
-      MealViews::RegularView.render(night.parse_order(input_array))
-    else
-      MealViews::RegularView.render(["error"])
-    end
+    MealViews::RegularView.render(meals[input_array.shift.downcase].parse_order(input_array))
   end
 
 end

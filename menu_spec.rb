@@ -171,13 +171,13 @@ describe MealController do
 
   context '#morning' do
     it 'should be an instance of meal' do
-      expect(con.morning).to be_an_instance_of(Meal)
+      expect(con.meals["morning"]).to be_an_instance_of(Meal)
     end
   end
 
   context '#night' do
     it 'should be an instance of meal' do
-      expect(con.night).to be_an_instance_of(Meal)
+      expect(con.meals["night"]).to be_an_instance_of(Meal)
     end
   end
 
